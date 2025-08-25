@@ -15,13 +15,13 @@ def main():
 
     latitude = conf.get('lat', 0)
     longitude = conf.get('lon', 0)
-    start_date = conf.get('start_date', 0)
-    end_date = conf.get('end_date', 0)
+    start_time = conf.get('start_time', 0)
+    end_time = conf.get('end_time', 0)
     output_dir = conf.get('output_dir', 0)
 
     output_dir = Path(output_dir) / f"{longitude};{latitude}.csv"
 
-    nasa_weather = PowerAPI(start=pd.Timestamp(str(start_date)), end=pd.Timestamp(str(end_date)), long=longitude, lat=latitude)
+    nasa_weather = PowerAPI(start=pd.Timestamp(str(start_time)), end=pd.Timestamp(str(end_time)), long=longitude, lat=latitude)
 
     weather_df = nasa_weather.get_weather()
 
