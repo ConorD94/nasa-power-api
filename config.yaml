@@ -5,11 +5,11 @@
 lat: 53.524960
 lon: -1.627447
 
-# Format: YYYYMMDD
-start_date: 20000101
+# Format: YYYYMMDDHH
+start_time: 2000010100
 
-# Format: YYYYMMDD
-end_date: 20210101
+# Format: YYYYMMDDHH
+end_time: 2000010123
 
 # Output directory for weather records
 output_dir: ./data

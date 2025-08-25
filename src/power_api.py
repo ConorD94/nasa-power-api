@@ -18,7 +18,7 @@ class PowerAPI:
     url : str
         Base URL
     """
-    url = "https://power.larc.nasa.gov/api/temporal/daily/point?"
+    url = "https://power.larc.nasa.gov/api/temporal/hourly/point?"
 
     def __init__(self,
                  start: Union[date, datetime, pd.Timestamp],
@@ -30,7 +30,9 @@ class PowerAPI:
         Parameters
         ----------
         start: Union[date, datetime, pd.Timestamp]
+            Start time. Hour resolution is supported.
         end: Union[date, datetime, pd.Timestamp]
+            End time. Hour resolution is supported.
         long: float
             Longitude as float
         lat: float
@@ -40,9 +42,8 @@ class PowerAPI:
             the data with the latter
         parameter: Optional[List[str]]
             List with the parameters to query.
-            Default is ['T2M_RANGE', 'TS', 'T2MDEW', 'T2MWET', 'T2M_MAX', 'T2M_MIN', 'T2M', 'QV2M', 'RH2M',
-                        'PRECTOTCORR', 'PS', 'WS10M', 'WS10M_MAX', 'WS10M_MIN', 'WS10M_RANGE', 'WS50M', 'WS50M_MAX',
-                        'WS50M_MIN', 'WS50M_RANGE']
+            Default is ['T2M', 'TS', 'T2MDEW', 'T2MWET', 'QV2M', 'RH2M',
+                        'PRECTOTCORR', 'PS', 'WS10M', 'WS50M']
         """
         self.start = start
         self.end = end
@@ -50,9 +51,8 @@ class PowerAPI:
         self.lat = lat
         self.use_long_names = use_long_names
         if parameter is None:
-            self.parameter = ['T2M_RANGE', 'TS', 'T2MDEW', 'T2MWET', 'T2M_MAX', 'T2M_MIN', 'T2M', 'QV2M', 'RH2M',
-                              'PRECTOTCORR', 'PS', 'WS10M', 'WS10M_MAX', 'WS10M_MIN', 'WS10M_RANGE', 'WS50M', 'WS50M_MAX',
-                              'WS50M_MIN', 'WS50M_RANGE']
+            self.parameter = ['T2M', 'TS', 'T2MDEW', 'T2MWET', 'QV2M', 'RH2M',
+                              'PRECTOTCORR', 'PS', 'WS10M', 'WS50M']
 
         self.request = self._build_request()
 
@@ -69,8 +69,8 @@ class PowerAPI:
         r += '&community=RE'
         r += f"&longitude={self.long}"
         r += f"&latitude={self.lat}"
-        r += f"&start={self.start.strftime('%Y%m%d')}"
-        r += f"&end={self.end.strftime('%Y%m%d')}"
+        r += f"&start={self.start.strftime('%Y%m%d%H')}"
+        r += f"&end={self.end.strftime('%Y%m%d%H')}"
         r += '&format=JSON'
 
         return r
